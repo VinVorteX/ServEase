@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Booking struct {
@@ -17,4 +19,6 @@ type Booking struct {
 	User     User    `json:"user" gorm:"foreignKey:UserID"`
 	Service  Service `json:"service" gorm:"foreignKey:ServiceID"`
 	Provider User    `json:"provider" gorm:"foreignKey:ProviderID"`
+
+	gorm.Model
 }
