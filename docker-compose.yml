@@ -10,6 +10,7 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=servease
+      - JWT_SECRET=your-secret-key-here
     depends_on:
       - postgres
 

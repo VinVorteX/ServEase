@@ -4,12 +4,9 @@ const API_URL = 'http://localhost:8080/api';
 
 const api = axios.create({
   baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
-// Add auth token to requests if available
+// Add token to requests
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -18,18 +15,18 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export const auth = {
-  login: (credentials) => api.post('/login', credentials),
-  register: (userData) => api.post('/register', userData),
-};
-
 export const services = {
   getAll: () => api.get('/services'),
-  getById: (id) => api.get(`/services/${id}`),
+  create: (data) => api.post('/services', data),
+};
+
+export const auth = {
+  login: (data) => api.post('/login', data),
+  register: (data) => api.post('/register', data),
 };
 
 export const bookings = {
-  create: (bookingData) => api.post('/bookings', bookingData),
+  create: (data) => api.post('/bookings', data),
   getUserBookings: () => api.get('/bookings'),
 };
 
