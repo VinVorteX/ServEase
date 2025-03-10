@@ -8,14 +8,15 @@ import Register from './pages/Register';
 import BookingPage from './pages/BookingPage';
 import Profile from './pages/Profile';
 import { AuthProvider } from './context/AuthContext';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="App">
+        <div className="flex flex-col min-h-screen">
           <Navbar />
-          <main className="container mx-auto px-4 py-8">
+          <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/services" element={<Services />} />
@@ -25,6 +26,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
             </Routes>
           </main>
+          <Footer />
         </div>
       </Router>
     </AuthProvider>
