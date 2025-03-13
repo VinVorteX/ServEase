@@ -2,157 +2,103 @@
 
 A modern platform connecting service providers with customers for home services. Built with Go (Gin) backend and React frontend.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Docker and Docker Compose
-- Git
 - Node.js 20+ (for local development)
 - Go 1.24+ (for local development)
 - PostgreSQL 16+ (for local development)
 
-### Installation & Setup
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/servease.git
-   cd servease
-   ```
-
-2. Environment Setup:
-
+### Running with Docker
 ```bash
-# Backend environment variables (already in docker-compose.yml)
-DB_HOST=postgres
-DB_USER=postgres
-DB_PASSWORD=postgres
-DB_NAME=servease
-JWT_SECRET=your-secret-key-here
-```
-
-3. Start the application:
-
-```bash
+# Start all services
 docker-compose up --build
 ```
 
-4. Access the services:
-
+Access:
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:8080
-- Database: localhost:5432
 
 ### Local Development
 
-#### Frontend
-
+1. Start PostgreSQL:
 ```bash
-cd frontend
-npm install
-npm start
+docker run --name servease-postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=servease -p 5432:5432 -d postgres
 ```
 
-#### Backend
-
+2. Start Backend:
 ```bash
 cd backend
 go mod download
 go run cmd/server/main.go
 ```
 
-## 🛠 Tech Stack
+3. Start Frontend:
+```bash
+cd frontend
+npm install
+npm start
+```
+
+## Features
+
+- User Authentication (JWT)
+- Service Provider Registration
+- Service Listings with Categories
+- Real-time Service Booking
+- Provider Profiles
+- Rate Limiting
+- CORS Support
+
+## Tech Stack
 
 ### Frontend
 - React 18
 - React Router v6
-- Axios for API calls
-- TailwindCSS for styling
-- Context API for state management
+- Axios
+- TailwindCSS
+- Context API
 
 ### Backend
 - Go (Gin Framework)
-- GORM for database operations
-- JWT for authentication
-- PostgreSQL database
-- Rate limiting
-- Graceful shutdown
+- GORM with PostgreSQL
+- JWT Authentication
+- Rate Limiting
+- Graceful Shutdown
 
-## 📁 Project Structure
-
-```bash
+## Project Structure
+```
 .
 ├── backend/
-│   ├── cmd/
-│   │   └── server/          # Application entry point
-│   │   ├── internal/
-│   │   │   ├── api/            # API routes
-│   │   │   ├── config/         # Configuration
-│   │   │   ├── database/       # Database connection
-│   │   │   ├── handlers/       # Request handlers
-│   │   │   ├── middleware/     # Middleware functions
-│   │   │   ├── models/         # Data models
-│   │   │   └── utils/          # Utilities
-│   │   └── Dockerfile
-│   └── frontend/
-│       ├── public/
-│       ├── src/
-│       │   ├── components/     # Reusable components
-│       │   ├── context/        # React context
-│       │   ├── pages/          # Page components
-│       │   └── services/       # API services
-│       └── Dockerfile
+│   ├── cmd/server/         # Entry point
+│   └── internal/           # Internal packages
+│       ├── handlers/       # Request handlers
+│       ├── middleware/     # Middleware
+│       ├── models/         # Data models
+│       └── database/       # DB connection
+├── frontend/
+│   └── src/
+│       ├── components/     # React components
+│       ├── pages/         # Page components
+│       ├── services/      # API services
+│       └── context/       # React context
 └── docker-compose.yml
 ```
 
-## 🔑 Features
+## API Endpoints
 
-- User Authentication (JWT)
-- Service Provider Registration
-- Service Listing and Filtering
-- Booking Management
-- Responsive Design
-- Rate Limiting
-- Error Handling
-- Database Migrations
-- Secure Password Hashing
-- Input Validation
+### Auth
+- POST /api/register - Register user
+- POST /api/login - Login user
 
-## 🔒 Security
+### Services
+- GET /api/services - List services
+- POST /api/services - Create service
 
-- JWT-based authentication
-- Password hashing with bcrypt
-- Rate limiting for API endpoints
-- Input validation and sanitization
-- Secure HTTP headers
-- CORS configuration
-
-## 📝 API Documentation
-
-### Authentication Endpoints
-- POST /api/register - User registration
-- POST /api/login - User login
-
-### Service Endpoints
-- GET /api/services - List all services
-- POST /api/services - Create new service (providers only)
-
-### Booking Endpoints
+### Bookings
 - POST /api/bookings - Create booking
 - GET /api/bookings - Get user bookings
 
-### Provider Endpoints
-- GET /api/providers - List all providers
-- GET /api/providers/:id - Get provider profile
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+## License
+MIT
