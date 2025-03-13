@@ -19,10 +19,18 @@ type CreateServiceRequest struct {
 
 func GetServices(c *gin.Context) {
 	utils.Logger.Printf("Fetching services")
+	
 	var services []models.Service
 	result := database.DB.Preload("Provider").Find(&services)
 	if result.Error != nil {
+		utils.Logger.Printf("Error fetching services: %v", result.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch services"})
+		return
+	}
+
+	// Return services even if empty
+	if len(services) == 0 {
+		c.JSON(http.StatusOK, []models.Service{})
 		return
 	}
 

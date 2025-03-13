@@ -30,16 +30,18 @@ func main() {
 
 	router := gin.Default()
 
-	// Add rate limiting
-	router.Use(middleware.RateLimitMiddleware(10)) // 10 requests per second
-
 	// Configure CORS
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:3000"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Authorization", "Content-Type"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
 	}))
+
+	// Apply rate limiting after CORS
+	router.Use(middleware.RateLimitMiddleware())
 
 	// Initialize routes
 	initializeRoutes(router)

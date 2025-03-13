@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import heroImage from '../assets/hero-image.jpg';
+import heroImage from '../assets/PypiProfileImage.jpeg';
 
 const Home = () => {
   return (
